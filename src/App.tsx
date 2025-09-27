@@ -12,10 +12,10 @@ export default function App() {
       <div className="bg-gradient-to-r from-black via-gray-900 to-black py-8 px-6 text-center border-b border-green-500/30">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl font-bold text-[#00FF66] mb-2">
-            GATOR: Generative AI Training & Ops Readiness
+            GATOR: Generative AI Training and Operational Readiness
           </h1>
           <p className="text-xl text-gray-300">
-            Level up cyber mission readiness with AI-powered training
+            Prove your cyber teams are mission-ready.
           </p>
         </div>
       </div>
@@ -36,21 +36,20 @@ export default function App() {
           
           <div className="space-y-6">
             <h2 className="text-3xl font-bold text-white">
-              Transform Cyber Training with Generative AI
+              Objective Readiness Metrics, Not Gut Feelings
             </h2>
             <p className="text-lg text-gray-300 leading-relaxed">
-              GATOR revolutionizes cyber operations training through adaptive AI environments, 
-              bias-free evaluations, and real-time readiness insights designed for mission-critical scenarios.
+              Close the gaps: Unknown readiness. Drifting standards. Speed of threats. GATOR grades real operator actions with AI-powered objectivity.
             </p>
             <div className="flex flex-wrap gap-3">
               <Badge className="bg-[#00FF66]/20 text-[#00FF66] border border-[#00FF66]/30 text-[14px]">
-                Secure & Enclave-Ready
+                GAO-Aligned Metrics
               </Badge>
               <Badge className="bg-[#00FF66]/20 text-[#00FF66] border border-[#00FF66]/30 text-[14px]">
-                Model-Agnostic
+                JQR/JCT&CS Compliant
               </Badge>
               <Badge className="bg-[#00FF66]/20 text-[#00FF66] border border-[#00FF66]/30 text-[14px]">
-                Real-Time Analytics
+                60-90 Day Pilot Ready
               </Badge>
             </div>
           </div>
@@ -59,7 +58,7 @@ export default function App() {
         {/* Key Value Props - 2x2 Grid */}
         <div className="mb-16">
           <h2 className="text-2xl font-bold text-center mb-12 text-[#00FF66]">
-            Core Capabilities
+            How GATOR Turns 'I Think' Into 'I Know'
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
             <Card className="bg-gray-900/50 border-gray-700 p-6 hover:border-[#00FF66]/50 transition-colors">
@@ -70,7 +69,7 @@ export default function App() {
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">Environment Generation</h3>
                   <p className="text-gray-300">
-                    Adaptive, realistic cyber ranges tailored to operator roles and mission requirements.
+                    Adaptive ranges aligned to JQR/JCT&CS. Living scenarios that evolve with operators.
                   </p>
                 </div>
               </div>
@@ -84,7 +83,7 @@ export default function App() {
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">AI Evaluator Chatbot</h3>
                   <p className="text-gray-300">
-                    Bias-free, doctrinally aligned assessments with instant feedback and performance insights.
+                    Objective grading of operator actions. Eliminates examiner variance.
                   </p>
                 </div>
               </div>
@@ -98,7 +97,7 @@ export default function App() {
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">Automated Reporting & Insights</h3>
                   <p className="text-gray-300">
-                    Dashboards and predictive analytics to track readiness in real time.
+                    Commander dashboards with role-based truth data. GAO-compliant readiness metrics.
                   </p>
                 </div>
               </div>
@@ -112,7 +111,7 @@ export default function App() {
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">Secure & Enclave-Ready</h3>
                   <p className="text-gray-300">
-                    On-premises deployment, model-agnostic design for classified environments.
+                    SIPR/JWICS ready. On-prem LLMs. Zero PII. Feeds JCC2-R.
                   </p>
                 </div>
               </div>
@@ -124,7 +123,7 @@ export default function App() {
         <div className="mb-16">
           <Card className="bg-gray-900/50 bg-gradient-to-r from-[#00FF66]/10 to-[#00FF66]/5 border-[#00FF66]/30 p-8">
             <h2 className="text-2xl font-bold text-[#00FF66] mb-6 text-center">
-              Why Attend This Presentation?
+              What Commanders Get in 90 Seconds
             </h2>
             <div className="grid md:grid-cols-3 gap-6 text-center">
               <div>
@@ -134,7 +133,7 @@ export default function App() {
                   </div>
                 </div>
                 <p className="text-white">
-                  Discover how GATOR accelerates operator proficiency
+                  Defensible readiness data, not anecdotes
                 </p>
               </div>
               <div>
@@ -144,7 +143,7 @@ export default function App() {
                   </div>
                 </div>
                 <p className="text-white">
-                  See how commanders get real-time readiness visibility
+                  Squadron comparability via objective metrics
                 </p>
               </div>
               <div>
@@ -154,7 +153,7 @@ export default function App() {
                   </div>
                 </div>
                 <p className="text-white">
-                  Learn how Generative AI is transforming cyber training
+                  Faster OODA loop with predictive insights
                 </p>
               </div>
             </div>
@@ -175,14 +174,9 @@ export default function App() {
               </a>
             </div>
             
-            <div className="flex justify-center">
-              <a href="https://gogator.ai" target="_blank" rel="noopener noreferrer">
-                <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors">
-                  <div className="text-black text-xs text-center">
-                    QR Code<br/>
-                    GoGator.ai
-                  </div>
-                </div>
+            <div className="text-center">
+              <a href="https://home.gogator.ai" target="_blank" rel="noopener noreferrer" className="text-[#00FF66] hover:underline">
+                GoGATOR.ai
               </a>
             </div>
           </div>
@@ -191,7 +185,7 @@ export default function App() {
         {/* Footer */}
         <div className="text-center mt-12 pt-8 border-t border-gray-700">
           <p className="text-gray-400 text-sm">
-            © 2024 GATOR. Transforming cyber operations through generative AI.
+            © 2024 GATOR. Let's move from range time to readiness proof.
           </p>
         </div>
       </div>
