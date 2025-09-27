@@ -122,7 +122,7 @@ export default function App() {
 
         {/* Why Attend Section */}
         <div className="mb-16">
-          <Card className="bg-gradient-to-r from-[#00FF66]/10 to-[#00FF66]/5 border-[#00FF66]/30 p-8">
+          <Card className="bg-gray-900/50 bg-gradient-to-r from-[#00FF66]/10 to-[#00FF66]/5 border-[#00FF66]/30 p-8">
             <h2 className="text-2xl font-bold text-[#00FF66] mb-6 text-center">
               Why Attend This Presentation?
             </h2>
