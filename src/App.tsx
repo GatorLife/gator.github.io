@@ -6,8 +6,42 @@ import { Badge } from './components/ui/badge';
 import { Mail, Globe, Calendar, MapPin, Shield, BarChart3, Bot, Settings, Zap, Eye, Cpu } from 'lucide-react';
 
 export default function App() {
+  const exportToPDF = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    // Use setTimeout to break out of the React event loop
+    setTimeout(() => {
+      try {
+        const element = document.getElementById('app-root');
+        
+        if (element && window.html2pdf) {
+          console.log('📄 Generating PDF...');
+          window.html2pdf().from(element).set({
+            margin: 0.5,
+            filename: 'GATOR_Flyer.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+          }).save();
+          
+          // Show success message
+          setTimeout(() => {
+            alert('PDF export initiated! Check your downloads folder for GATOR_Flyer.pdf');
+          }, 1000);
+        } else {
+          console.error('PDF export dependencies not available');
+          alert('PDF export is currently unavailable. Please try again later.');
+        }
+      } catch (error) {
+        console.error('Error exporting PDF:', error);
+        alert('PDF export failed. Please try again later.');
+      }
+    }, 100);
+  };
+
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div id="app-root" className="min-h-screen bg-black text-white">
       {/* Top Banner */}
       <div className="bg-gradient-to-r from-black via-gray-900 to-black py-8 px-6 text-center border-b border-green-500/30">
         <div className="max-w-4xl mx-auto">
@@ -185,7 +219,14 @@ export default function App() {
         {/* Footer */}
         <div className="text-center mt-12 pt-8 border-t border-gray-700">
           <p className="text-gray-400 text-sm">
-            © 2024 GATOR. Let's move from range time to readiness proof.
+            © 2024 GATOR. Let's move from range time to readiness proof.{' '}
+            <button 
+              onClick={exportToPDF}
+              className="text-[#00FF66] hover:text-[#00CC52] underline bg-transparent border-none p-0 font-inherit text-sm transition-colors"
+              style={{ cursor: 'pointer' }}
+            >
+              Export to PDF
+            </button>
           </p>
         </div>
       </div>
