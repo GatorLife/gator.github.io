@@ -70,7 +70,7 @@ export default function App() {
           
           <div className="space-y-6">
             <h2 className="text-3xl font-bold text-white">
-              Objective Readiness Metrics, Not Gut Feelings
+              Objective Readiness Metrics,<br/>Not Gut Feelings
             </h2>
             <p className="text-lg text-gray-300 leading-relaxed">
               Close the gaps: Unknown readiness. Drifting standards. Speed of threats. GATOR grades real operator actions with AI-powered objectivity.
@@ -103,7 +103,7 @@ export default function App() {
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">Environment Generation</h3>
                   <p className="text-gray-300">
-                    Adaptive ranges aligned to JQR/JCT&CS. Living scenarios that evolve with operators.
+                    Adaptive ranges aligned to JQR/JCT&CS.<br/>Living scenarios that evolve with operators.
                   </p>
                 </div>
               </div>
@@ -117,7 +117,7 @@ export default function App() {
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">AI Evaluator Chatbot</h3>
                   <p className="text-gray-300">
-                    Objective grading of operator actions. Eliminates examiner variance.
+                    Objective grading of operator actions.<br/>Eliminates examiner variance.
                   </p>
                 </div>
               </div>
@@ -131,7 +131,7 @@ export default function App() {
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">Automated Reporting & Insights</h3>
                   <p className="text-gray-300">
-                    Commander dashboards with role-based truth data. GAO-compliant readiness metrics.
+                    Commander dashboards with role-based truth data.<br/>GAO-compliant readiness metrics.
                   </p>
                 </div>
               </div>
@@ -167,7 +167,7 @@ export default function App() {
                   </div>
                 </div>
                 <p className="text-white">
-                  Defensible readiness data, not anecdotes
+                  Defensible readiness, not anecdotes
                 </p>
               </div>
               <div>
@@ -177,7 +177,7 @@ export default function App() {
                   </div>
                 </div>
                 <p className="text-white">
-                  Squadron comparability via objective metrics
+                  Data driven training
                 </p>
               </div>
               <div>
