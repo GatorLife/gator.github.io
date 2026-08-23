@@ -1,193 +1,233 @@
-import gatorIcon from './assets/GATOR_Icon.png';
-import { Card } from './components/ui/card';
-import { Badge } from './components/ui/badge';
-import { Mail, Globe, Calendar, MapPin, Shield, BarChart3, Bot, Settings, Zap, Eye, Cpu } from 'lucide-react';
+import type { ReactNode } from 'react';
+
+/* ---------------------------------------------------------------------------
+   Copy is lifted verbatim from GATOR_Capability_Overview.pdf. Keeping it as
+   data at the top of the file means content edits never touch the layout.
+--------------------------------------------------------------------------- */
+
+const SITE_URL = 'https://gogator.ai';
+const SUPPORT_EMAIL = 'Support@GoGATOR.ai';
+
+const HERO =
+  'The only platform to train, evaluate, and assess cyber operators, in one system, at scale.';
+
+const PROBLEM =
+  "Cyber units struggle to measure operator readiness. Evaluations aren't standardized, ranges aren't threat representative, and skill decay goes untracked, leaving mission capability in question.";
+
+/* Row-major order, which renders column-major in the two-column grid exactly as
+   the flyer lays it out. */
+const DELIVERABLES = [
+  {
+    title: 'Threat-Representative Ranges',
+    body: 'Built from real threat intel, CISA advisories, and MITRE ATT&CK Framework. Ready in minutes, not days.',
+  },
+  {
+    title: 'Instant Training Recommendations',
+    body: 'Operators scored against JQR standards automatically. Every result generates a tailored training plan instantly.',
+  },
+  {
+    title: 'Commander Dashboard',
+    body: 'Individual and unit readiness, live. Skill gaps by Cyber Work Role. Defensible readiness metrics.',
+  },
+  {
+    title: 'One Operator Lifecycle',
+    body: 'Mission planning, training, and formal evaluation in a single system, with no tools to stitch together.',
+  },
+];
+
+const READINESS_PROFILE =
+  "Every evaluation updates a persistent record of what each operator knows and where skills are decaying, then generates the next training recommendation instantly, aligned to CYBERCOM 2.0's mandate for domain mastery.";
+
+const WHY = [
+  'Built by a cyber operator, for cyber operators',
+  'No operator data leaves the enclave; CUI-ready from day one',
+  'Mapped to JQR / RTM / Cyber Work Role, not generic cyber training',
+  'Adds real-time assessment to your current range',
+];
+
+const COMPLIANCE = [
+  'NIST 800-171',
+  'CMMC LVL 2',
+  'IL5 GOVCLOUD',
+  'LLM AGNOSTIC',
+  'CONTAINERIZED DEPLOYMENT',
+  'ALL CLASSIFICATIONS',
+];
+
+const OPERATIONAL_STATUS =
+  'Piloted across several Active Duty and Air National Guard Cyber Operating Squadrons.';
+
+const FOOTER_QUOTE = "“From 'I think we're ready' to 'I know we're ready.'”";
+
+/* ------------------------------------------------------------------------- */
+
+/* The GATOR chevron, traced from the two filled triangles in the flyer's page
+   content stream (upper wing #5E9E33, lower wing #7AC943). Drawn as vector
+   rather than using assets/GATOR_Icon.png, which is a different, glossy
+   beveled rendering of the mark and cannot match. */
+function ChevronMark() {
+  return (
+    <svg
+      viewBox="0 0 39.71 38"
+      className="h-[3.9rem] w-[4.1rem] shrink-0"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path fill="var(--color-accent-dim)" d="M39.71 0 H28.31 L0 19 H11.4 Z" />
+      <path fill="var(--color-accent)" d="M39.71 38 H28.31 L0 19 H11.4 Z" />
+    </svg>
+  );
+}
+
+function Section({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <section className="mb-9 md:mb-11">
+      <h2 className="inline-block border-b-2 border-accent-dim pr-5 pb-1.5 font-semibold uppercase text-accent text-[1.05rem] md:text-[1.15rem]">
+        {title}
+      </h2>
+      <div className="mt-5">{children}</div>
+    </section>
+  );
+}
+
+function BodyCopy({ children }: { children: ReactNode }) {
+  return (
+    <p className="body-copy max-w-[52rem] text-muted text-[0.95rem] md:text-base leading-relaxed">
+      {children}
+    </p>
+  );
+}
+
+function Classification() {
+  return (
+    <p className="font-mono uppercase text-classified text-[0.75rem]">
+      Unclassified
+    </p>
+  );
+}
+
+function ContactLines({ className = '' }: { className?: string }) {
+  return (
+    <div className={className}>
+      <p className="text-contact text-[0.9rem]">
+        <a href={SITE_URL} className="transition-colors hover:text-accent">
+          GoGATOR.ai
+        </a>
+        <span className="px-1.5 text-contact/60">|</span>
+        <a href={`mailto:${SUPPORT_EMAIL}`} className="transition-colors hover:text-accent">
+          {SUPPORT_EMAIL}
+        </a>
+      </p>
+    </div>
+  );
+}
 
 export default function App() {
-
   return (
-    <div id="app-root" className="min-h-screen bg-black text-white">
-      {/* Top Banner */}
-      <div className="bg-gradient-to-r from-black via-gray-900 to-black py-8 px-6 text-center border-b border-green-500/30">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold text-[#00FF66] mb-2">
-            GATOR: Gen AI Training & Operational Readiness
-          </h1>
-          <p className="text-xl text-gray-300">
-            Prove your cyber teams are mission-ready.
-          </p>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        {/* Hero Section */}
-        <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
-          <div>
-            <img
-              src={gatorIcon}
-              alt="GATOR Icon"
-              className="w-full max-w-xs mx-auto mb-6 filter drop-shadow-lg"
-            />
-            <div className="text-center">
-
+    <div id="app-root" className="min-h-screen bg-ink text-body">
+      <header className="border-b-[3px] border-accent bg-band">
+        <div className="page band-inner flex flex-col gap-5 py-7 md:flex-row md:items-start md:justify-between">
+          <div className="flex items-center gap-4">
+            <ChevronMark />
+            <div>
+              <p className="font-bold leading-none tracking-tight text-accent text-[2.6rem]">
+                GATOR
+              </p>
+              <p className="mt-2 text-body-dim text-[0.95rem]">
+                General AI Training &amp; Operational Readiness
+              </p>
             </div>
           </div>
-          
-          <div className="space-y-6">
-            <h2 className="text-3xl font-bold text-white">
-              Objective Readiness Metrics,<br/>Not Gut Feelings
-            </h2>
-            <p className="text-lg text-gray-300 leading-relaxed">
-              Close the gaps: Unknown readiness. Drifting standards. Speed of threats. GATOR grades real operator actions with AI-powered objectivity.
+
+          <div className="band-contact flex flex-col md:items-end md:text-right">
+            <Classification />
+            <ContactLines className="mt-2.5" />
+            <p className="text-contact text-[0.9rem]">
+              GOGATOR INC<span className="px-1.5 text-contact/60">|</span>Patent Pending
             </p>
-            <div className="flex flex-wrap gap-3">
-              <Badge className="bg-[#00FF66]/20 text-[#00FF66] border border-[#00FF66]/30 text-[14px]">
-                GAO-Aligned Metrics
-              </Badge>
-              <Badge className="bg-[#00FF66]/20 text-[#00FF66] border border-[#00FF66]/30 text-[14px]">
-                JQR/JCT&CS Compliant
-              </Badge>
-              <Badge className="bg-[#00FF66]/20 text-[#00FF66] border border-[#00FF66]/30 text-[14px]">
-                60-90 Day Pilot Ready
-              </Badge>
+          </div>
+        </div>
+      </header>
+
+      <main className="page">
+        <div className="hero my-10 border-l-4 border-accent pl-5 md:my-12 md:pl-6">
+          <h1 className="hero-title max-w-[54rem] font-semibold leading-[1.25] text-body text-[1.75rem] md:text-[2.15rem]">
+            {HERO}
+          </h1>
+        </div>
+
+        <Section title="The Problem">
+          <BodyCopy>{PROBLEM}</BodyCopy>
+        </Section>
+
+        <Section title="What GATOR Delivers">
+          <ul className="deliver-grid grid gap-x-12 gap-y-6 md:grid-cols-2">
+            {DELIVERABLES.map((item) => (
+              <li key={item.title} className="deliver-item flex gap-3">
+                <span
+                  aria-hidden="true"
+                  className="mt-[0.45rem] h-2 w-2 shrink-0 rounded-full bg-accent"
+                />
+                <div>
+                  <h3 className="font-semibold text-accent text-[1rem] md:text-[1.05rem]">
+                    {item.title}
+                  </h3>
+                  <p className="mt-1.5 text-muted text-[0.9rem] md:text-[0.95rem] leading-relaxed">
+                    {item.body}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        <Section title="A Living Readiness Profile">
+          <BodyCopy>{READINESS_PROFILE}</BodyCopy>
+        </Section>
+
+        <Section title="Why GATOR">
+          <ul className="space-y-2.5">
+            {WHY.map((item) => (
+              <li key={item} className="flex items-start gap-3">
+                <span aria-hidden="true" className="mt-[0.42rem] h-2 w-2 shrink-0 bg-accent" />
+                <span className="text-muted text-[0.95rem] md:text-base">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        <Section title="Security & Compliance">
+          <ul className="pill-row flex flex-wrap gap-2.5">
+            {COMPLIANCE.map((item) => (
+              <li
+                key={item}
+                className="rounded-full border border-accent-dim bg-panel px-3.5 py-1.5 font-mono uppercase text-accent text-[0.75rem]"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        <Section title="Operational Status">
+          <BodyCopy>{OPERATIONAL_STATUS}</BodyCopy>
+        </Section>
+      </main>
+
+      <footer className="mt-12 border-t-[3px] border-accent bg-band">
+        <div className="page footer-inner flex flex-col gap-4 py-7 md:flex-row md:items-start md:justify-between">
+          <div>
+            <p className="font-semibold text-accent text-[0.95rem]">GOGATOR INC</p>
+            <ContactLines className="mt-1" />
+          </div>
+          <div className="footer-quote flex flex-col md:items-end md:text-right">
+            <p className="italic text-muted text-[0.9rem]">{FOOTER_QUOTE}</p>
+            <div className="mt-1.5">
+              <Classification />
             </div>
           </div>
         </div>
-
-        {/* Key Value Props - 2x2 Grid */}
-        <div className="mb-16">
-          <h2 className="text-2xl font-bold text-center mb-12 text-[#00FF66]">
-            How GATOR Turns 'I Think' Into 'I Know'
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <Card className="bg-gray-900/50 border-gray-700 p-6 hover:border-[#00FF66]/50 transition-colors">
-              <div className="flex items-start space-x-4">
-                <div className="bg-[#00FF66]/20 p-3 rounded-lg">
-                  <Settings className="w-6 h-6 text-[#00FF66]" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-2">Environment Generation</h3>
-                  <p className="text-gray-300">
-                    Adaptive ranges aligned to JQR/JCT&CS.<br/>Living scenarios that evolve with operators.
-                  </p>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="bg-gray-900/50 border-gray-700 p-6 hover:border-[#00FF66]/50 transition-colors">
-              <div className="flex items-start space-x-4">
-                <div className="bg-[#00FF66]/20 p-3 rounded-lg">
-                  <Bot className="w-6 h-6 text-[#00FF66]" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-2">AI Evaluator Chatbot</h3>
-                  <p className="text-gray-300">
-                    Objective grading of operator actions.<br/>Eliminates examiner variance.
-                  </p>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="bg-gray-900/50 border-gray-700 p-6 hover:border-[#00FF66]/50 transition-colors">
-              <div className="flex items-start space-x-4">
-                <div className="bg-[#00FF66]/20 p-3 rounded-lg">
-                  <BarChart3 className="w-6 h-6 text-[#00FF66]" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-2">Automated Reporting & Insights</h3>
-                  <p className="text-gray-300">
-                    Commander dashboards with role-based truth data.<br/>GAO-compliant readiness metrics.
-                  </p>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="bg-gray-900/50 border-gray-700 p-6 hover:border-[#00FF66]/50 transition-colors">
-              <div className="flex items-start space-x-4">
-                <div className="bg-[#00FF66]/20 p-3 rounded-lg">
-                  <Shield className="w-6 h-6 text-[#00FF66]" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-2">Secure & Enclave-Ready</h3>
-                  <p className="text-gray-300">
-                    SIPR/JWICS ready. On-prem LLMs. Zero PII. Feeds JCC2-R.
-                  </p>
-                </div>
-              </div>
-            </Card>
-          </div>
-        </div>
-
-        {/* Why Attend Section */}
-        <div className="mb-16">
-          <Card className="bg-gray-900/50 bg-gradient-to-r from-[#00FF66]/10 to-[#00FF66]/5 border-[#00FF66]/30 p-8">
-            <h2 className="text-2xl font-bold text-[#00FF66] mb-6 text-center">
-              What Commanders Get
-            </h2>
-            <div className="grid md:grid-cols-3 gap-6 text-center">
-              <div>
-                <div className="flex justify-center mb-4">
-                  <div className="bg-[#00FF66]/20 p-3 rounded-lg">
-                    <Zap className="w-8 h-8 text-[#00FF66]" />
-                  </div>
-                </div>
-                <p className="text-white">
-                  Defensible readiness, not anecdotes
-                </p>
-              </div>
-              <div>
-                <div className="flex justify-center mb-4">
-                  <div className="bg-[#00FF66]/20 p-3 rounded-lg">
-                    <Eye className="w-8 h-8 text-[#00FF66]" />
-                  </div>
-                </div>
-                <p className="text-white">
-                  Data driven training
-                </p>
-              </div>
-              <div>
-                <div className="flex justify-center mb-4">
-                  <div className="bg-[#00FF66]/20 p-3 rounded-lg">
-                    <Cpu className="w-8 h-8 text-[#00FF66]" />
-                  </div>
-                </div>
-                <p className="text-white">
-                  Faster OODA loop with predictive insights
-                </p>
-              </div>
-            </div>
-          </Card>
-        </div>
-
-        {/* Event Details */}
-        <div className="bg-gradient-to-r from-gray-900 to-black border-2 border-[#00FF66] rounded-lg p-4">
-          <div className="grid grid-cols-3 gap-6 items-center">
-            <div className="text-center">
-              <p className="font-medium text-white">Cole Russell</p>
-              <p className="text-sm text-gray-300">USAF Reserve Officer & GATOR Founder</p>
-            </div>
-            
-            <div className="text-center">
-              <a href="mailto:Cole@GoGATOR.ai" className="text-[#00FF66] hover:underline">
-                Cole@GoGATOR.ai
-              </a>
-            </div>
-            
-            <div className="text-center">
-              <a href="https://home.gogator.ai" target="_blank" rel="noopener noreferrer" className="text-[#00FF66] hover:underline">
-                GoGATOR.ai
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="text-center mt-12 pt-8 border-t border-gray-700">
-          <p className="text-gray-400 text-sm">
-            © 2025 GATOR. Let's move from range time to readiness.
-          </p>
-        </div>
-      </div>
+      </footer>
     </div>
   );
 }
