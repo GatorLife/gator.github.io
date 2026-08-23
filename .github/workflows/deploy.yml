@@ -7,17 +7,15 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-deploy:
+  # Runs for pull requests as well as pushes, so a PR verifies the build.
+  # Deliberately declares no `environment:` — the github-pages environment is
+  # restricted to the main branch, and naming it here would reject the job at
+  # startup on every PR, before a single step runs.
+  build:
     runs-on: ubuntu-latest
-    
+
     permissions:
       contents: read
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
     - name: Checkout
@@ -26,7 +24,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
         cache: 'npm'
 
     - name: Install dependencies
@@ -41,13 +39,30 @@ jobs:
         cp .nojekyll dist/ || true
 
     - name: Setup Pages
+      if: github.event_name == 'push'
       uses: actions/configure-pages@v4
 
     - name: Upload artifact
+      if: github.event_name == 'push'
       uses: actions/upload-pages-artifact@v3
       with:
         path: ./dist
 
+  # Only pushes to main reach the protected environment and publish.
+  deploy:
+    if: github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
