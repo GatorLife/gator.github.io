@@ -1,233 +1,258 @@
-import type { ReactNode } from 'react';
+// One US Letter sheet (816 x 1056 CSS px), laid out in fixed pixels so the
+// screen view and the printed page are the same thing. The layout follows the
+// GATOR capability sheets, in the product's dark theme (the only theme).
+import type { ReactElement, ReactNode } from "react";
+import {
+  AGENTS,
+  APP_LABEL,
+  APP_URL,
+  ASK,
+  BRIEFING_HREF,
+  COMPLIANCE_BADGES,
+  DEPLOYMENT_MODES,
+  HEADLINE_STAT,
+  MODULES,
+  SITE_HEADLINE,
+  SITE_LEAD,
+  STEPS,
+  SUPPORT_EMAIL,
+} from "./content";
 
-/* ---------------------------------------------------------------------------
-   Copy is lifted verbatim from GATOR_Capability_Overview.pdf. Keeping it as
-   data at the top of the file means content edits never touch the layout.
---------------------------------------------------------------------------- */
+const MONO = "font-mono text-[12px] font-semibold";
+const LABEL = `${MONO} uppercase tracking-[0.16em] text-green`;
+const BODY = "text-[12.5px] leading-[19px] text-body";
+const LINK = "text-green underline underline-offset-2 hover:text-ink";
 
-const SITE_URL = 'https://gogator.ai';
-const SUPPORT_EMAIL = 'Support@GoGATOR.ai';
-
-const HERO =
-  'The only platform to train, evaluate, and assess cyber operators, in one system, at scale.';
-
-const PROBLEM =
-  "Cyber units struggle to measure operator readiness. Evaluations aren't standardized, ranges aren't threat representative, and skill decay goes untracked, leaving mission capability in question.";
-
-/* Row-major order, which renders column-major in the two-column grid exactly as
-   the flyer lays it out. */
-const DELIVERABLES = [
-  {
-    title: 'Threat-Representative Ranges',
-    body: 'Built from real threat intel, CISA advisories, and MITRE ATT&CK Framework. Ready in minutes, not days.',
-  },
-  {
-    title: 'Instant Training Recommendations',
-    body: 'Operators scored against JQR standards automatically. Every result generates a tailored training plan instantly.',
-  },
-  {
-    title: 'Commander Dashboard',
-    body: 'Individual and unit readiness, live. Skill gaps by Cyber Work Role. Defensible readiness metrics.',
-  },
-  {
-    title: 'One Operator Lifecycle',
-    body: 'Mission planning, training, and formal evaluation in a single system, with no tools to stitch together.',
-  },
-];
-
-const READINESS_PROFILE =
-  "Every evaluation updates a persistent record of what each operator knows and where skills are decaying, then generates the next training recommendation instantly, aligned to CYBERCOM 2.0's mandate for domain mastery.";
-
-const WHY = [
-  'Built by a cyber operator, for cyber operators',
-  'No operator data leaves the enclave; CUI-ready from day one',
-  'Mapped to JQR / RTM / Cyber Work Role, not generic cyber training',
-  'Adds real-time assessment to your current range',
-];
-
-const COMPLIANCE = [
-  'NIST 800-171',
-  'CMMC LVL 2',
-  'IL5 GOVCLOUD',
-  'LLM AGNOSTIC',
-  'CONTAINERIZED DEPLOYMENT',
-  'ALL CLASSIFICATIONS',
-];
-
-const OPERATIONAL_STATUS =
-  'Piloted across several Active Duty and Air National Guard Cyber Operating Squadrons.';
-
-const FOOTER_QUOTE = "“From 'I think we're ready' to 'I know we're ready.'”";
-
-/* ------------------------------------------------------------------------- */
-
-/* The GATOR chevron, traced from the two filled triangles in the flyer's page
-   content stream (upper wing #5E9E33, lower wing #7AC943). Drawn as vector
-   rather than using assets/GATOR_Icon.png, which is a different, glossy
-   beveled rendering of the mark and cannot match. */
-function ChevronMark() {
-  return (
-    <svg
-      viewBox="0 0 39.71 38"
-      className="h-[3.9rem] w-[4.1rem] shrink-0"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <path fill="var(--color-accent-dim)" d="M39.71 0 H28.31 L0 19 H11.4 Z" />
-      <path fill="var(--color-accent)" d="M39.71 38 H28.31 L0 19 H11.4 Z" />
-    </svg>
-  );
+function Label({ children }: { children: ReactNode }): ReactElement {
+  return <h2 className={LABEL}>{children}</h2>;
 }
 
-function Section({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <section className="mb-9 md:mb-11">
-      <h2 className="inline-block border-b-2 border-accent-dim pr-5 pb-1.5 font-semibold uppercase text-accent text-[1.05rem] md:text-[1.15rem]">
-        {title}
-      </h2>
-      <div className="mt-5">{children}</div>
-    </section>
-  );
+function Classification(): ReactElement {
+  return <span className={`${MONO} tracking-[0.2em]`}>UNCLASSIFIED</span>;
 }
 
-function BodyCopy({ children }: { children: ReactNode }) {
-  return (
-    <p className="body-copy max-w-[52rem] text-muted text-[0.95rem] md:text-base leading-relaxed">
-      {children}
-    </p>
-  );
+function printSheet(): void {
+  window.print();
 }
 
-function Classification() {
+// Screen only: the bar above the sheet.
+function Toolbar(): ReactElement {
   return (
-    <p className="font-mono uppercase text-classified text-[0.75rem]">
-      Unclassified
-    </p>
-  );
-}
-
-function ContactLines({ className = '' }: { className?: string }) {
-  return (
-    <div className={className}>
-      <p className="text-contact text-[0.9rem]">
-        <a href={SITE_URL} className="transition-colors hover:text-accent">
-          GoGATOR.ai
+    <div className="flex w-[816px] items-center justify-between font-mono text-[12px] font-medium uppercase tracking-[0.14em] print:hidden">
+      <a
+        href={APP_URL}
+        className="text-muted transition-colors hover:text-ink"
+      >
+        {APP_LABEL}
+      </a>
+      <div className="flex items-center gap-3">
+        <button
+          type="button"
+          onClick={printSheet}
+          className="h-9 cursor-pointer border border-rule px-4 text-ink transition-colors hover:border-green hover:text-green"
+        >
+          Print / Save PDF
+        </button>
+        <a
+          href={BRIEFING_HREF}
+          className="inline-flex h-9 items-center bg-green px-4 text-on-green transition-colors hover:bg-green/90"
+        >
+          Request a briefing
         </a>
-        <span className="px-1.5 text-contact/60">|</span>
-        <a href={`mailto:${SUPPORT_EMAIL}`} className="transition-colors hover:text-accent">
-          {SUPPORT_EMAIL}
-        </a>
-      </p>
+      </div>
     </div>
   );
 }
 
-export default function App() {
+function Masthead(): ReactElement {
   return (
-    <div id="app-root" className="min-h-screen bg-ink text-body">
-      <header className="border-b-[3px] border-accent bg-band">
-        <div className="page band-inner flex flex-col gap-5 py-7 md:flex-row md:items-start md:justify-between">
-          <div className="flex items-center gap-4">
-            <ChevronMark />
-            <div>
-              <p className="font-bold leading-none tracking-tight text-accent text-[2.6rem]">
-                GATOR
-              </p>
-              <p className="mt-2 text-body-dim text-[0.95rem]">
-                General AI Training &amp; Operational Readiness
-              </p>
-            </div>
-          </div>
+    <header className="flex flex-col gap-[16px]">
+      <div className="flex justify-between border-b border-rule pb-[8px]">
+        <Classification />
+        <Classification />
+      </div>
 
-          <div className="band-contact flex flex-col md:items-end md:text-right">
-            <Classification />
-            <ContactLines className="mt-2.5" />
-            <p className="text-contact text-[0.9rem]">
-              GOGATOR INC<span className="px-1.5 text-contact/60">|</span>Patent Pending
-            </p>
+      <div className="flex items-start justify-between">
+        <div className="flex items-center gap-[10px] pt-[6px]">
+          {/* The original chevron artwork; never redraw it. */}
+          <img
+            src="/gator-chevron.png"
+            alt=""
+            aria-hidden="true"
+            width={293}
+            height={293}
+            className="size-[26px]"
+          />
+          <span className="text-[23px] font-bold tracking-[0.01em]">GATOR</span>
+          <span className="text-[13px] text-muted">
+            General AI Training &amp; Operational Readiness
+          </span>
+        </div>
+        <div className="text-right font-mono text-[12px] uppercase leading-[17px] tracking-[0.12em] text-muted">
+          <div>Capability overview</div>
+          <div>Cyber qualification platform</div>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between gap-[24px]">
+        <h1 className="text-[39px] font-bold leading-[43px] tracking-[-0.02em]">
+          {SITE_HEADLINE[0]}
+          <br />
+          {SITE_HEADLINE[1]}
+        </h1>
+        <div className="flex shrink-0 items-center gap-[12px] border-l-4 border-green pl-[12px]">
+          <span className="text-[50px] font-bold leading-[50px]">
+            {HEADLINE_STAT.value}
+          </span>
+          <div className="text-[12.5px] leading-[17px]">
+            {HEADLINE_STAT.lines.map((line) => (
+              <div key={line} className="font-semibold">
+                {line}
+              </div>
+            ))}
+            <div>{HEADLINE_STAT.note}</div>
           </div>
         </div>
-      </header>
+      </div>
 
-      <main className="page">
-        <div className="hero my-10 border-l-4 border-accent pl-5 md:my-12 md:pl-6">
-          <h1 className="hero-title max-w-[54rem] font-semibold leading-[1.25] text-body text-[1.75rem] md:text-[2.15rem]">
-            {HERO}
-          </h1>
+      <p className="text-[13.5px] leading-[21px] text-body">{SITE_LEAD}</p>
+    </header>
+  );
+}
+
+function Platform(): ReactElement {
+  return (
+    <section className="flex flex-col gap-[10px]">
+      <Label>The platform</Label>
+      <div className="grid grid-cols-2 gap-x-[28px] gap-y-[14px]">
+        {MODULES.map((m) => (
+          <div key={m.title} className="border-t-2 border-green pt-[9px]">
+            <h3 className="pb-[3px] text-[14px] font-semibold">{m.title}</h3>
+            <p className={BODY}>{m.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Deployment(): ReactElement {
+  return (
+    <section className="flex flex-col gap-[10px] rounded-[4px] border border-hairline bg-tint px-[22px] py-[16px]">
+      <Label>Deploy your way</Label>
+      <div className={`grid grid-cols-3 gap-x-[24px] ${BODY}`}>
+        {DEPLOYMENT_MODES.map((mode) => (
+          <p key={mode.title}>
+            <span className="font-semibold text-ink">{mode.title}</span>{" "}
+            {mode.body}
+          </p>
+        ))}
+      </div>
+      <ul className="flex gap-[8px]" aria-label="Compliance">
+        {COMPLIANCE_BADGES.map((badge) => (
+          <li
+            key={badge}
+            className="border border-rule bg-paper px-[8px] py-[2px] font-mono text-[11px] font-medium tracking-[0.04em] text-ink"
+          >
+            {badge}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function Practice(): ReactElement {
+  return (
+    <section className="flex flex-col gap-[10px]">
+      <Label>One evaluation, end to end</Label>
+      <div className="grid grid-cols-3 gap-x-[24px]">
+        {STEPS.map((step) => (
+          <div key={step.title} className="border-t border-rule pt-[9px]">
+            <h3 className={`${MONO} pb-[5px] uppercase text-green`}>
+              {step.title}
+            </h3>
+            <p className={BODY}>{step.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Agents(): ReactElement {
+  return (
+    <section className="flex items-center gap-[18px] rounded-[4px] border border-hairline bg-tint px-[22px] py-[13px]">
+      <h2
+        className={`${MONO} shrink-0 uppercase tracking-[0.16em] text-green`}
+      >
+        {AGENTS.label}
+      </h2>
+      <p className="text-[13px] leading-[19px]">
+        <span className="font-semibold">{AGENTS.lead}</span> {AGENTS.body}
+      </p>
+    </section>
+  );
+}
+
+function Ask(): ReactElement {
+  return (
+    <section className="flex flex-col gap-[6px] border-l-4 border-green bg-green-tint px-[22px] py-[13px]">
+      <Label>Request a briefing</Label>
+      <p className="text-[14px] leading-[21px]">
+        {ASK}{" "}
+        <a href={BRIEFING_HREF} className={LINK}>
+          {SUPPORT_EMAIL}
+        </a>
+      </p>
+    </section>
+  );
+}
+
+function Colophon(): ReactElement {
+  return (
+    <footer className="flex flex-col gap-[12px]">
+      <div className="flex items-end justify-between">
+        <div className="font-mono text-[12px] leading-[17px] text-muted">
+          <div>Patent pending</div>
+          <div>info.gogator.ai</div>
         </div>
-
-        <Section title="The Problem">
-          <BodyCopy>{PROBLEM}</BodyCopy>
-        </Section>
-
-        <Section title="What GATOR Delivers">
-          <ul className="deliver-grid grid gap-x-12 gap-y-6 md:grid-cols-2">
-            {DELIVERABLES.map((item) => (
-              <li key={item.title} className="deliver-item flex gap-3">
-                <span
-                  aria-hidden="true"
-                  className="mt-[0.45rem] h-2 w-2 shrink-0 rounded-full bg-accent"
-                />
-                <div>
-                  <h3 className="font-semibold text-accent text-[1rem] md:text-[1.05rem]">
-                    {item.title}
-                  </h3>
-                  <p className="mt-1.5 text-muted text-[0.9rem] md:text-[0.95rem] leading-relaxed">
-                    {item.body}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </Section>
-
-        <Section title="A Living Readiness Profile">
-          <BodyCopy>{READINESS_PROFILE}</BodyCopy>
-        </Section>
-
-        <Section title="Why GATOR">
-          <ul className="space-y-2.5">
-            {WHY.map((item) => (
-              <li key={item} className="flex items-start gap-3">
-                <span aria-hidden="true" className="mt-[0.42rem] h-2 w-2 shrink-0 bg-accent" />
-                <span className="text-muted text-[0.95rem] md:text-base">{item}</span>
-              </li>
-            ))}
-          </ul>
-        </Section>
-
-        <Section title="Security & Compliance">
-          <ul className="pill-row flex flex-wrap gap-2.5">
-            {COMPLIANCE.map((item) => (
-              <li
-                key={item}
-                className="rounded-full border border-accent-dim bg-panel px-3.5 py-1.5 font-mono uppercase text-accent text-[0.75rem]"
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
-        </Section>
-
-        <Section title="Operational Status">
-          <BodyCopy>{OPERATIONAL_STATUS}</BodyCopy>
-        </Section>
-      </main>
-
-      <footer className="mt-12 border-t-[3px] border-accent bg-band">
-        <div className="page footer-inner flex flex-col gap-4 py-7 md:flex-row md:items-start md:justify-between">
+        <div className="text-right text-[13px] leading-[19px]">
+          <div className="font-bold">GOGATOR INC</div>
           <div>
-            <p className="font-semibold text-accent text-[0.95rem]">GOGATOR INC</p>
-            <ContactLines className="mt-1" />
-          </div>
-          <div className="footer-quote flex flex-col md:items-end md:text-right">
-            <p className="italic text-muted text-[0.9rem]">{FOOTER_QUOTE}</p>
-            <div className="mt-1.5">
-              <Classification />
-            </div>
+            <a href={`mailto:${SUPPORT_EMAIL}`} className={LINK}>
+              {SUPPORT_EMAIL}
+            </a>{" "}
+            ·{" "}
+            <a href={APP_URL} className={LINK}>
+              {APP_LABEL}
+            </a>
           </div>
         </div>
-      </footer>
+      </div>
+      <div className="text-center">
+        <Classification />
+      </div>
+    </footer>
+  );
+}
+
+export default function App(): ReactElement {
+  return (
+    <div className="flex min-h-screen min-w-fit flex-col items-center gap-[20px] bg-paper px-[24px] py-[24px] font-sans antialiased print:block print:min-h-0 print:p-0">
+      <Toolbar />
+      <main
+        id="sheet"
+        className="flex h-[1056px] w-[816px] shrink-0 flex-col justify-between overflow-hidden bg-paper px-[48px] outline outline-1 outline-hairline print:outline-0 pb-[22px] pt-[26px] text-ink"
+      >
+        <Masthead />
+        <Platform />
+        <Deployment />
+        <Practice />
+        <Agents />
+        <Ask />
+        <Colophon />
+      </main>
     </div>
   );
 }

@@ -1,11 +1,14 @@
+# gator-info
 
-  # GATOR Flyer
+The GATOR capability overview at [info.gogator.ai](https://info.gogator.ai): one printable US Letter
+sheet in the dark theme, the same on screen and on paper.
 
-  This is a code bundle for GATOR Flyer. The original project is available at https://www.figma.com/design/KD4AAozg3JNLmW3HCEb5ra/GATOR-Flyer.
+```bash
+npm install
+npm run dev     # http://localhost:3000
+npm run build   # outputs to dist/
+```
 
-  ## Running the code
+Requires Node 20 or newer. Pushes to `main` deploy to GitHub Pages via `.github/workflows/deploy.yml`.
 
-  Run `npm i` to install the dependencies.
-
-  Run `npm run dev` to start the development server.
-  
+Copy lives in `src/content.ts`. The sheet must always fit one page; see `CLAUDE.md` for how to check.

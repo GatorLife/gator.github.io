@@ -4,52 +4,60 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-GATOR Flyer is a single-page marketing website for GATOR (General AI Training & Operational
-Readiness), a cyber readiness assessment platform. The site is built with React + TypeScript and
-uses Vite as the build tool.
+The public capability overview for GATOR (General AI Training & Operational Readiness), served at
+`info.gogator.ai`. It is **one printable sheet**: a single US Letter page that looks the same on
+screen and on paper. It must always fit one page. Do not turn it into a scrolling site.
 
-The page is a faithful web rendering of the GATOR capability-overview flyer: same sections, same
-verbatim copy, same palette and typography. It reflows responsively on screen, and an
-`@media print` layer reproduces the original as a single full-bleed US Letter page.
+The layout follows the GATOR capability sheets (green rules and mono labels) in the product's dark
+theme, and the copy follows the product homepage at `gogator.ai`. **Dark is the only theme**, on
+screen and in print; do not add a light variant.
+
+React + TypeScript, built with Vite.
 
 ## Commands
 
 - `npm install` - Install dependencies
-- `npm run dev` - Start development server (opens at http://localhost:3000)
+- `npm run dev` - Start development server (http://localhost:3000)
 - `npm run build` - Build for production (outputs to `dist/`)
-- `npx vite preview` - Serve the production build (use this to verify the print layout)
+- `npx vite preview` - Serve the production build (use this to verify printing)
 
 ## Architecture
 
-This is a simple single-page React application:
-
 - **Entry point**: `src/main.tsx` renders `<App />` into `#root` and imports the fonts + stylesheet
-- **Main component**: `src/App.tsx` contains the entire page. Flyer copy lives in `const` arrays at
-  the top of the file so content edits never touch layout. Small local helpers (`Section`,
-  `BodyCopy`, `Classification`, `ContactLines`, `ChevronMark`) carry the repeating patterns.
+- **Sheet**: `src/App.tsx` holds the whole page. `<main id="sheet">` is a fixed 816 x 1056 px box
+  (8.5 x 11 in at 96 px per inch) laid out in pixel units, with its blocks spread by
+  `justify-between`. A screen-only toolbar above it has the Print and Request a briefing buttons.
+- **Copy**: all of it is in `src/content.ts`, drawn from the product homepage
+  (GatorLife/Gator, `apps/client-server/src/components/landing/home-content.ts`) and cut to fit.
+  `App.tsx` holds layout only.
 - **Styling**: Tailwind CSS v4, compiled at build time by `@tailwindcss/vite`
-- **Icons**: none. The flyer uses only dots, squares, pills and the chevron mark, all drawn in CSS
-  or inline SVG.
 
-## Key Technical Details
+## The one-page rule
 
-- **Brand tokens live in exactly one place**: the `@theme` block in `src/index.css`. Brand green is
-  `#7AC943`, with `#5E9E33` for section rules and pill borders. Do not hard-code hex in `App.tsx`.
-- **Tailwind content scanning is scoped**: `src/index.css` opens with
-  `@import "tailwindcss" source(none);` plus `@source "./App.tsx";`. Automatic detection is off, so
-  only classes used in `App.tsx` are compiled and the 46 unused shadcn components in
-  `src/components/ui/` contribute nothing to the bundle. **If you add a component file that uses
-  Tailwind classes, add an `@source` line for it or its classes will silently not compile.**
-- **Fonts are self-hosted** via `@fontsource/ibm-plex-sans` and `@fontsource/ibm-plex-mono`
-  (latin subsets, imported in `src/main.tsx`). Deliberately not Google Fonts: this site is opened on
-  DoD networks that may block `fonts.googleapis.com`, and a silent fallback to system sans would
-  change line breaks and push the print layout onto a second page.
-- **The print layer** is at the bottom of `src/index.css`. The whole layout is rem-based, so the
-  single `html { font-size }` value inside `@media print` tunes the page fit — if the output ever
-  spills to two pages, adjust that one number. `@page { margin: 0 }` is what lets the header and
-  footer bands bleed to the paper edge.
-- Uses `@` path alias pointing to `./src` (configured in `vite.config.ts`)
-- Vite config includes versioned package aliases, needed only by the unused shadcn components
+- The sheet has `overflow-hidden` and a fixed height, so copy that runs long is **clipped, not
+  wrapped onto a second page**. After any copy or layout change, check the fit: in the browser
+  console, `sheet.scrollHeight` must equal `1056`, and the blocks should keep visible gaps.
+- To verify printing, build, run `npx vite preview`, and print to PDF. The result must be exactly
+  one Letter page, dark edge to edge. "Background graphics" must be on in the print dialog.
+- The print rules are at the bottom of `src/index.css`: `@page { size: letter; margin: 0 }`, exact
+  colour printing, and a sheet height a hair under 11in so rounding never adds a blank page.
+- If something new must go on the sheet, something else comes off.
+
+## Design rules
+
+- **Brand tokens live in exactly one place**: the `@theme` block in `src/index.css`. Do not
+  hard-code hex in `App.tsx`.
+- **Green**: `green` (#22c55e) is for rules, borders, fills, labels and links. Text on a green fill
+  uses `on-green`.
+- **Type**: IBM Plex Sans for reading; IBM Plex Mono, uppercase and letter-spaced, for section
+  labels, tags and metadata.
+- **Borders, not shadows**. Radii are 0 or 4px. Nothing is pill-shaped.
+- **The mark** is the artwork at `public/gator-chevron.png`. Never redraw it as an SVG.
+- **Voice**: direct, sentence case, numbers over adjectives. The name is always GATOR. Anything
+  not yet fielded sits under the "In development" label.
+- **Fonts are self-hosted** via `@fontsource` (latin subsets, imported in `src/main.tsx`).
+  Deliberately not Google Fonts: this site is opened on DoD networks that may block
+  `fonts.googleapis.com`, and a fallback font would change line breaks and break the one-page fit.
 
 ## Deployment
 
