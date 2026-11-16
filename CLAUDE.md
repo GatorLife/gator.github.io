@@ -8,8 +8,9 @@ The public capability overview for GATOR (General AI Training & Operational Read
 `info.gogator.ai`. It is **one printable sheet**: a single US Letter page that looks the same on
 screen and on paper. It must always fit one page. Do not turn it into a scrolling site.
 
-The look follows the GATOR capability sheets (white paper, ink text, green rules and mono labels)
-and the copy follows the product homepage at `gogator.ai`.
+The layout follows the GATOR capability sheets (green rules and mono labels) in the product's dark
+theme, and the copy follows the product homepage at `gogator.ai`. **Dark is the only theme**, on
+screen and in print; do not add a light variant.
 
 React + TypeScript, built with Vite.
 
@@ -37,7 +38,7 @@ React + TypeScript, built with Vite.
   wrapped onto a second page**. After any copy or layout change, check the fit: in the browser
   console, `sheet.scrollHeight` must equal `1056`, and the blocks should keep visible gaps.
 - To verify printing, build, run `npx vite preview`, and print to PDF. The result must be exactly
-  one Letter page. "Background graphics" must be on in the print dialog.
+  one Letter page, dark edge to edge. "Background graphics" must be on in the print dialog.
 - The print rules are at the bottom of `src/index.css`: `@page { size: letter; margin: 0 }`, exact
   colour printing, and a sheet height a hair under 11in so rounding never adds a blank page.
 - If something new must go on the sheet, something else comes off.
@@ -46,8 +47,8 @@ React + TypeScript, built with Vite.
 
 - **Brand tokens live in exactly one place**: the `@theme` block in `src/index.css`. Do not
   hard-code hex in `App.tsx`.
-- **Green**: `green` (#22c55e) is for rules, borders and fills only. Green text on paper uses
-  `green-ink` (#117937), which passes contrast.
+- **Green**: `green` (#22c55e) is for rules, borders, fills, labels and links. Text on a green fill
+  uses `on-green`.
 - **Type**: IBM Plex Sans for reading; IBM Plex Mono, uppercase and letter-spaced, for section
   labels, tags and metadata.
 - **Borders, not shadows**. Radii are 0 or 4px. Nothing is pill-shaped.

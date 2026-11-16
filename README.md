@@ -1,7 +1,7 @@
 # gator-info
 
 The GATOR capability overview at [info.gogator.ai](https://info.gogator.ai): one printable US Letter
-sheet, the same on screen and on paper.
+sheet in the dark theme, the same on screen and on paper.
 
 ```bash
 npm install

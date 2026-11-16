@@ -1,6 +1,6 @@
 // One US Letter sheet (816 x 1056 CSS px), laid out in fixed pixels so the
 // screen view and the printed page are the same thing. The layout follows the
-// GATOR capability sheets: white paper, ink text, green rules and labels.
+// GATOR capability sheets, in the product's dark theme (the only theme).
 import type { ReactElement, ReactNode } from "react";
 import {
   AGENTS,
@@ -19,9 +19,9 @@ import {
 } from "./content";
 
 const MONO = "font-mono text-[12px] font-semibold";
-const LABEL = `${MONO} uppercase tracking-[0.16em] text-green-ink`;
+const LABEL = `${MONO} uppercase tracking-[0.16em] text-green`;
 const BODY = "text-[12.5px] leading-[19px] text-body";
-const LINK = "text-green-ink underline underline-offset-2 hover:text-ink";
+const LINK = "text-green underline underline-offset-2 hover:text-ink";
 
 function Label({ children }: { children: ReactNode }): ReactElement {
   return <h2 className={LABEL}>{children}</h2>;
@@ -41,7 +41,7 @@ function Toolbar(): ReactElement {
     <div className="flex w-[816px] items-center justify-between font-mono text-[12px] font-medium uppercase tracking-[0.14em] print:hidden">
       <a
         href={APP_URL}
-        className="text-on-dark-muted transition-colors hover:text-on-dark"
+        className="text-muted transition-colors hover:text-ink"
       >
         {APP_LABEL}
       </a>
@@ -49,13 +49,13 @@ function Toolbar(): ReactElement {
         <button
           type="button"
           onClick={printSheet}
-          className="h-9 cursor-pointer border border-desk-line px-4 text-on-dark transition-colors hover:border-green hover:text-green"
+          className="h-9 cursor-pointer border border-rule px-4 text-ink transition-colors hover:border-green hover:text-green"
         >
           Print / Save PDF
         </button>
         <a
           href={BRIEFING_HREF}
-          className="inline-flex h-9 items-center bg-green px-4 text-ink transition-colors hover:bg-green/90"
+          className="inline-flex h-9 items-center bg-green px-4 text-on-green transition-colors hover:bg-green/90"
         >
           Request a briefing
         </a>
@@ -67,7 +67,7 @@ function Toolbar(): ReactElement {
 function Masthead(): ReactElement {
   return (
     <header className="flex flex-col gap-[16px]">
-      <div className="flex justify-between border-b border-ink pb-[8px]">
+      <div className="flex justify-between border-b border-rule pb-[8px]">
         <Classification />
         <Classification />
       </div>
@@ -169,7 +169,7 @@ function Practice(): ReactElement {
       <div className="grid grid-cols-3 gap-x-[24px]">
         {STEPS.map((step) => (
           <div key={step.title} className="border-t border-rule pt-[9px]">
-            <h3 className={`${MONO} pb-[5px] uppercase text-green-ink`}>
+            <h3 className={`${MONO} pb-[5px] uppercase text-green`}>
               {step.title}
             </h3>
             <p className={BODY}>{step.body}</p>
@@ -182,7 +182,7 @@ function Practice(): ReactElement {
 
 function Agents(): ReactElement {
   return (
-    <section className="flex items-center gap-[18px] rounded-[4px] bg-ink px-[22px] py-[13px] text-on-dark">
+    <section className="flex items-center gap-[18px] rounded-[4px] border border-hairline bg-tint px-[22px] py-[13px]">
       <h2
         className={`${MONO} shrink-0 uppercase tracking-[0.16em] text-green`}
       >
@@ -239,11 +239,11 @@ function Colophon(): ReactElement {
 
 export default function App(): ReactElement {
   return (
-    <div className="flex min-h-screen min-w-fit flex-col items-center gap-[20px] bg-desk px-[24px] py-[24px] font-sans antialiased print:block print:min-h-0 print:bg-paper print:p-0">
+    <div className="flex min-h-screen min-w-fit flex-col items-center gap-[20px] bg-paper px-[24px] py-[24px] font-sans antialiased print:block print:min-h-0 print:p-0">
       <Toolbar />
       <main
         id="sheet"
-        className="flex h-[1056px] w-[816px] shrink-0 flex-col justify-between overflow-hidden bg-paper px-[48px] pb-[22px] pt-[26px] text-ink"
+        className="flex h-[1056px] w-[816px] shrink-0 flex-col justify-between overflow-hidden bg-paper px-[48px] outline outline-1 outline-hairline print:outline-0 pb-[22px] pt-[26px] text-ink"
       >
         <Masthead />
         <Platform />
