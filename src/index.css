@@ -2,48 +2,64 @@
 @source "./";
 
 /* ---------------------------------------------------------------------------
-   GATOR brand tokens. Values and names mirror the product's dark theme
-   (GatorLife/Gator, apps/client-server/src/app/globals.css) so class strings
-   port between the product homepage and this site unchanged.
-   This @theme block is the ONLY place brand colors are defined.
+   GATOR brand tokens: the design system's light (paper) theme, as used on the
+   capability sheets, plus the product's dark ground for the screen behind the
+   sheet. This @theme block is the ONLY place brand colors are defined.
 --------------------------------------------------------------------------- */
 @theme {
-  --color-background: #0a0a0b;          /* page ground                        */
-  --color-foreground: #fafafa;          /* headlines and body text            */
-  --color-card: #18181b;                /* cards, tags                        */
-  --color-border: #27272a;              /* every 1px rule and card border     */
-  --color-muted-foreground: #a1a1aa;    /* secondary copy, eyebrows           */
-  --color-primary: #22c55e;             /* GATOR green: the primary action    */
-  --color-primary-foreground: #0a0a0a;  /* text on a green fill               */
-  --color-ai-accent: #84cc16;           /* Agentic marker (lime)              */
-  --color-info: #488af7;                /* Cloud marker (blue)                */
-  --color-warning: #ffc105;             /* Sovereign marker (amber)           */
+  --color-paper: #ffffff;        /* the sheet                              */
+  --color-ink: #0a0a0b;          /* headlines, rules, the dark band        */
+  --color-body: #3f4a5a;         /* body copy                              */
+  --color-muted: #57657a;        /* captions, mono metadata                */
+  --color-hairline: #d7dde5;     /* panel border                           */
+  --color-rule: #c9d1db;         /* thin rules, tag borders                */
+  --color-tint: #f3f5f4;         /* panel fill                             */
+  --color-green: #22c55e;        /* GATOR green: rules and fills only      */
+  --color-green-ink: #117937;    /* green text and links on paper          */
+  --color-green-tint: #eef6f0;   /* the ask panel                          */
+
+  --color-desk: #0a0a0b;         /* screen ground behind the sheet         */
+  --color-desk-line: #3f3f46;    /* outline button on the desk             */
+  --color-on-dark: #fafafa;      /* text on ink or desk                    */
+  --color-on-dark-muted: #a1a1aa;
 
   --font-sans: "IBM Plex Sans", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-
-  /* Square, as in the product: nothing is pill-shaped. */
-  --radius-sm: 0;
-  --radius-md: 2px;
-  --radius-lg: 4px;
 }
 
 @layer base {
-  html {
-    color-scheme: dark;
-    scroll-behavior: smooth;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-  }
-
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: var(--color-desk);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Print: the sheet is exactly US Letter at 96 CSS px per inch, so it prints as
+   one full-bleed page. "Background graphics" must be on in the print dialog
+   for the tinted panels and the dark band.
+--------------------------------------------------------------------------- */
+@page {
+  size: letter;
+  margin: 0;
+}
+
+@media print {
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+  }
+
+  /* A hair under 11in so rounding never pushes a blank second page. */
+  #sheet {
+    height: 10.98in;
   }
 }
