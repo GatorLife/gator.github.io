@@ -1,11 +1,16 @@
+# gator-info
 
-  # GATOR Flyer
+The public information site at [info.gogator.ai](https://info.gogator.ai): a condensed version of the
+GATOR product homepage, sharing its tokens, type and copy.
 
-  This is a code bundle for GATOR Flyer. The original project is available at https://www.figma.com/design/KD4AAozg3JNLmW3HCEb5ra/GATOR-Flyer.
+```bash
+npm install
+npm run dev     # http://localhost:3000
+npm run build   # outputs to dist/
+```
 
-  ## Running the code
+Requires Node 20 or newer. Pushes to `main` deploy to GitHub Pages via `.github/workflows/deploy.yml`.
 
-  Run `npm i` to install the dependencies.
-
-  Run `npm run dev` to start the development server.
-  
+Copy lives in `src/content.ts` and mirrors the product homepage in GatorLife/Gator
+(`apps/client-server/src/components/landing/home-content.ts`). Re-sync that file when the homepage
+copy changes.

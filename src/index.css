@@ -1,129 +1,49 @@
 @import "tailwindcss" source(none);
-@source "./App.tsx";
+@source "./";
 
 /* ---------------------------------------------------------------------------
-   GATOR brand tokens — sampled from GATOR_Capability_Overview.pdf.
-   This @theme block is the ONLY place brand colors are defined. Tailwind
-   generates the bg, text and border utilities from each --color- entry.
+   GATOR brand tokens. Values and names mirror the product's dark theme
+   (GatorLife/Gator, apps/client-server/src/app/globals.css) so class strings
+   port between the product homepage and this site unchanged.
+   This @theme block is the ONLY place brand colors are defined.
 --------------------------------------------------------------------------- */
 @theme {
-  --color-ink: #0a0a0a;          /* page background                    */
-  --color-band: #111111;         /* header + footer band background    */
-  --color-accent: #7ac943;       /* GATOR green                        */
-  --color-accent-dim: #5e9e33;   /* section rules, pill borders        */
-  --color-body: #e9e9e4;         /* primary text                       */
-  --color-body-dim: #c8c8c8;     /* header tagline                     */
-  --color-muted: #9e9e9e;        /* body copy, list items, quote       */
-  --color-contact: #8b8b8b;      /* header + footer contact lines      */
-  --color-classified: #c9b458;   /* amber UNCLASSIFIED markings        */
-  --color-panel: #151a14;        /* subtle green-tinted fill           */
+  --color-background: #0a0a0b;          /* page ground                        */
+  --color-foreground: #fafafa;          /* headlines and body text            */
+  --color-card: #18181b;                /* cards, tags                        */
+  --color-border: #27272a;              /* every 1px rule and card border     */
+  --color-muted-foreground: #a1a1aa;    /* secondary copy, eyebrows           */
+  --color-primary: #22c55e;             /* GATOR green: the primary action    */
+  --color-primary-foreground: #0a0a0a;  /* text on a green fill               */
+  --color-ai-accent: #84cc16;           /* Agentic marker (lime)              */
+  --color-info: #488af7;                /* Cloud marker (blue)                */
+  --color-warning: #ffc105;             /* Sovereign marker (amber)           */
 
-  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Square, as in the product: nothing is pill-shaped. */
+  --radius-sm: 0;
+  --radius-md: 2px;
+  --radius-lg: 4px;
 }
 
 @layer base {
   html {
     color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 
   body {
-    background-color: var(--color-ink);
-    color: var(--color-body);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-  }
-}
-
-/* Shared content column for the header band, main body and footer band. The
-   bands themselves run full-bleed; only their inner content is constrained. */
-.page {
-  margin-inline: auto;
-  max-width: 64rem;
-  padding-inline: 1.5rem;
-}
-
-/* ---------------------------------------------------------------------------
-   Print: reproduce the one-page letter flyer.
-
-   Requires "Print backgrounds" ON and "Headers and footers" OFF in the browser
-   print dialog for an exact match.
---------------------------------------------------------------------------- */
-@page {
-  size: letter;
-  margin: 0;
-}
-
-@media print {
-  *,
-  *::before,
-  *::after {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
-  /* The whole layout is rem-based, so this single value tunes the page fit. */
-  html {
-    font-size: 11.9px;
-  }
-
-  body {
-    background: #0a0a0a !important;
-  }
-
-  /* Pin the footer band to the bottom edge of the sheet, as it is on the
-     flyer, so any leftover vertical slack lands above it rather than below. */
-  #app-root {
-    display: flex;
-    flex-direction: column;
-    min-height: 11in;
-  }
-
-  #app-root > main {
-    flex: 1 0 auto;
-  }
-
-  #app-root > footer {
-    margin-top: 0 !important;
-  }
-
-  /* Paragraphs use a comfortable measure on screen; in print they run the full
-     column width, matching how the flyer wraps them. */
-  .body-copy,
-  .hero-title {
-    max-width: none !important;
-  }
-
-  /* Print width resolves near the small-screen breakpoint, so the responsive
-     stacking rules must be explicitly undone here. */
-  .band-inner,
-  .footer-inner {
-    flex-direction: row !important;
-    align-items: flex-start !important;
-    justify-content: space-between !important;
-    gap: 1.5rem !important;
-  }
-
-  .band-contact,
-  .footer-quote {
-    text-align: right !important;
-    align-items: flex-end !important;
-  }
-
-  .deliver-grid {
-    grid-template-columns: 1fr 1fr !important;
-  }
-
-  .page {
-    max-width: none !important;
-    padding-inline: 0.64in !important;
-  }
-
-  section,
-  .deliver-item,
-  .pill-row,
-  .hero {
-    break-inside: avoid;
-    page-break-inside: avoid;
   }
 }
